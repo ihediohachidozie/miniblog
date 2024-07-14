@@ -15,14 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+#from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from django.views.generic import RedirectView
 # Use static() to add URL mapping to serve static files during development (only)
 from django.conf import settings
 from django.conf.urls.static import static
+from account import views as user_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("blogApp/", include("blogApp.urls")),
     path("", RedirectView.as_view(url="blogApp")),
+    path('accounts/', include('django_registration.backends.one_step.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
